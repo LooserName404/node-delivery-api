@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "API de gestão de entregas para a Associação Comercial Paranaense (ACP).",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --require dotenv-safe/config src/index.js",
+    "prod": "node --require dotenv-safe/config src/index.js",
+    "start": "npm run dev",
+    "start:dev": "npm run dev",
+    "start:prod": "npm run prod"
   },
   "keywords": [
     "API",
@@ -12,5 +17,13 @@
     "entregas"
   ],
   "author": "Thyago Vinicius Camilo Cunha",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
