@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { encrypt, compare } from '../cryptography.js'
 
 const AssociadoSchema = new mongoose.Schema({
   nomeEmpresa: {
@@ -19,5 +20,21 @@ const AssociadoSchema = new mongoose.Schema({
     required: false,
   },
 })
+
+AssociadoSchema.pre('save', async (next) => {
+  const associado = this
+
+  if (!associado.isModified('senha')) return next()
+
+  try {
+    associado.senha = await encrypt(associado.senha)
+    return next()
+  } catch (error) {
+    return next(error)
+  }
+})
+
+AssociadoSchema.methods.compararSenha = async (senha) =>
+  await compare(senha, this.senha)
 
 export default mongoose.model('Associado', AssociadoSchema)
